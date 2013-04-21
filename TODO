@@ -1,0 +1,2 @@
+* Fix errors shown by Closure compiler.
+* Fix bug in purse implementation (on deposit we don't store new balance).
