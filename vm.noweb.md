@@ -84,15 +84,6 @@ interface to modules that are guaranteed to be safe (relative to the VM)
 as they run entirely inside the VM or are part of the VM's core. The
 interface is described later.
 
-<!-- TODO figure this out!
-
-When the object is garbage-collected we send the `Kame__finalize`
-message. The garbage collector is an implementation detail and not
-specified further. In the JavaScript implementation we would typically
-rely on the host language's GC. TODO if we rely on host GC can we still
-send finalize message?
--->
-
 Objects are created using the `makeobject` bytecode instruction. This
 instruction takes a dictionary of private variables as well as a code
 block for the handler.
