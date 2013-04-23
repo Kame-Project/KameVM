@@ -81,28 +81,75 @@ return <var_result>
 
 ### constant
 
+The `json_value` is a raw value embedded in the bytecode. Any item in
+the JSON spec's `value` type is allowed:
+
+* string
+* number
+* object
+* array
+* true
+* false
+* null
+
+This item is translated to a VM object and stored under the identifer
+given by `var_name`.
+
 ### load
+
+Load the object's private variable `private_name` and stores it under
+the identifier `var_name`. `null` if the private variable does not
+exist.
 
 ### store
 
+Store the value from the identifier `var_name` under the object's
+private variable `private_name`. `null` if there is no value under that
+identifier.
+
 ### send
+
+Sends the message stored under `var_message` to the object stored under
+`var_object` with the arguments stored under `var_arg1` through
+`var_argN`. Stores the result under the identifer `var_result`.
 
 ### apply
 
+Sends the message stored under `var_message` to the object stored under
+`var_object` with the arguments values (not identifiers) stored as a
+list under `var_arguments`. Stores the result under the identifier
+`var_result`.
+
 ### makeobject
+
+Creates a new object. The private variables are created from the
+dictionary at `var_dictionary`. The keys map to identifiers of private
+variables and the values to their respective values. The `codeblock` is
+used as the handler for messages sent to the new object. The new object
+is stored under `var_result`.
 
 ### equals
 
-This compares object references. i.e. identity. Equality has to be
-handled on an object level. Though you want to be careful as you will be
-handing one of the two objects a reference to the other.
+This compares object references. i.e. identity. The result is stored as
+a boolean under `var_result`.
 
-References are opaque. There is a special `null` reference which you can
-create with the JSON constant `null`.
+Equality has to be handled on an object level. You will want to be
+careful as you will be handing one of the two objects a reference to the
+other.
+
+Beyond comparing with `equals` references are opaque.
 
 ### if
 
+If the boolean stored under `var_bool` is true then execute the
+instruction. Otherwise do nothing. The instruction can be of any type
+including another `if`.
+
 ### return
+
+Return the value under `var_result` to the calling object. This
+immediately exists the handler and no further instructions are
+executed. This can be used to return early from a handler.
 
 ## Overview of Types
 
