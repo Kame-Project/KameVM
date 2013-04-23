@@ -188,7 +188,8 @@ sent. `Kame__modules` provides an interface to modules that are part of
 the VM's core. The interface for `Kame__modules` is described later.
 
 If the handler runs to the end without returning a value then `null`
-will be returned automatically.
+will be returned automatically. A `null` reference responds to every
+message send with an error.
 
 ## Overview of Types
 
