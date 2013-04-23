@@ -1093,7 +1093,6 @@ factory.Kame__send('makePurse', arr);
 
 <!--
 Local Variables:
-mode: markdown
 mode: gfm
 End:
 
