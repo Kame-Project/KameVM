@@ -219,17 +219,7 @@ persistent across restarts.
 
 ### Dictionary
 
-To prevent unintended security leaks we do not use the built-in `Object`
-from JavaScript as a dictionary. Instead we implement a new type that
-prefixes all keys so access from inside the VM is namespaced.
-
-
-### Array
-
-In a similar fashion to the `Dictionary` we implement our own safe
-`Array` type. This array makes sure that only numerical indexes are
-accessible.
-
+Check `hasOwnProperty` for security!
 
 ## Modules
 
