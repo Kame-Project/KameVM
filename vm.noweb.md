@@ -65,6 +65,45 @@ crash:
 @
 ```
 
+## Bytecode Instructions
+
+```
+constant <var_name> <json_value>
+load <var_name> <private_name>
+store <var_name> <private_name>
+send <var_result> <var_object> <var_message> <var_arg1>...<var_argN>
+apply <var_result> <var_object> <var_message> <var_arguments>
+makeobject <var_result> <var_dictionary> <codeblock>
+equals <var_result> <var_objA> <var_objB>
+if <var_bool> <instruction>
+return <var_result>
+```
+
+### constant
+
+### load
+
+### store
+
+### send
+
+### apply
+
+### makeobject
+
+### equals
+
+This compares object references. i.e. identity. Equality has to be
+handled on an object level. Though you want to be careful as you will be
+handing one of the two objects a reference to the other.
+
+References are opaque. There is a special `null` reference which you can
+create with the JSON constant `null`.
+
+### if
+
+### return
+
 ## Overview of Types
 
 The VM uses a few data types to manage its state and the code running
@@ -311,45 +350,6 @@ var array = (function () {
 @
 ```
 <!-- }}} -->
-
-## Bytecode Instructions
-
-```
-constant <var_name> <json_value>
-load <var_name> <private_name>
-store <var_name> <private_name>
-send <var_result> <var_object> <var_message> <var_arg1>...<var_argN>
-apply <var_result> <var_object> <var_message> <var_arguments>
-makeobject <var_result> <var_dictionary> <codeblock>
-equals <var_result> <var_objA> <var_objB>
-if <var_bool> <instruction>
-return <var_result>
-```
-
-### constant
-
-### load
-
-### store
-
-### send
-
-### apply
-
-### makeobject
-
-### equals
-
-This compares object references. i.e. identity. Equality has to be
-handled on an object level. Though you want to be careful as you will be
-handing one of the two objects a reference to the other.
-
-References are opaque. There is a special `null` reference which you can
-create with the JSON constant `null`.
-
-### if
-
-### return
 
 ## Modules
 
