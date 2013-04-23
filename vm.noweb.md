@@ -7,20 +7,20 @@ object-oriented programming:
 
 * No man-in-the-middle.
     * Within the same VM it is impossible to intercept or modify
-messages between two objects. The only exception is when an object has
-explicitly been given the authority to do so.
+    messages between two objects. The only exception is when an object has
+    explicitly been given the authority to do so.
     * TODO: Between two different VMs we employ cryptographic measures to
-prevent MITM attacks other than service denial.
+    prevent MITM attacks other than service denial.
 * Receiver is authenticated.
     * Once you hold a reference to another object any messages sent via
-this reference will be received by only this object. No object can fake
-the identity of another to receive their messages.
+    this reference will be received by only this object. No object can fake
+    the identity of another to receive their messages.
 * Sender is authorized.
     * You can only obtain a reference to another object through
-creation, construction and introduction. This means that if you hold a
-reference to another object you have been explicitly granted the
-authority to send messages to that object. The receiver can rely on
-this.
+    creation, construction and introduction. This means that if you hold a
+    reference to another object you have been explicitly granted the
+    authority to send messages to that object. The receiver can rely on
+    this.
 
 ### Important Notice
 
