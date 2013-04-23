@@ -159,6 +159,16 @@ Objects respond to at least one message: `respondsTo`. They should
 respond with a boolean indicating whether they are able to respond to
 that message.
 
+If there is a problem processing a message then an object would
+typically return an error. This is a convention but not a strict
+requirement. An error object responds to `isError` and responds
+`true`. If an object wants to return an error object as part of normal
+processing e.g. to construct a new error then you will need to
+coordinate with the caller. One possibility is to create an _inactive_
+error object that initially responds to `isError` with `false` but on
+activation through the `activate` message responds with `true` to future
+`isError` messages.
+
 Every object has an attached handler that is a list of bytecode
 instructions. This handler is called for every message sent to the
 object. The handler can access the object's private variables as well as
