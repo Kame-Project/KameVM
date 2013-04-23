@@ -191,35 +191,31 @@ If the handler runs to the end without returning a value then `null`
 will be returned automatically. A `null` reference responds to every
 message send with an error.
 
-## Overview of Types
+### From outside the VM
 
-The VM uses a few data types to manage its state and the code running
-inside the VM.
+A VM object has a `Kame__type` attribute that can be one of these
+strings:
 
-### Object
+* `"string"`
+* `"number"`
+* `"dictionary"`
+* `"list"`
+* `"boolean"`
+* `"object"`
 
-#### Implementation details
+Every VM object also has a `Kame__send()` method. This method takes a
+native string for the message and a VM list for the arguments. It takes
+a third parameter `callback` that will be called with the return value
+once the message has been processed.
 
-We store an `Object` as a `Dictionary` with two keys: `variables` and
-`handler`. `variables` stores a `Dictionary` of private variables.
-`handler` stores the code block.
+On every VM object except where `Kame__type = "object"` there is a
+`Kame__toNative()` method that provides a native value (native string,
+native number, etc).
 
-Native JavaScript code can interface with the VM by calling `Kame__send`
-on a VM object. Similary if a JavaScript object has a `Kame__send`
-method and a VM object holds a reference to it then it can be accessed
-from inside the VM. However the reference will be opaque and cannot be
-persistent across restarts.
+The `string`, `number`, etc. objects can be constructed using
+`Kame__string("a string")`, `Kame__number(42)`, etc.
 
-`null` responds with an error to every message.
-
-
-
-
-
-
-### Dictionary
-
-Check `hasOwnProperty` for security!
+TODO: Dictionary check `hasOwnProperty` for security!
 
 ## Modules
 
