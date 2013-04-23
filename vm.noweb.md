@@ -151,28 +151,41 @@ Return the value under `var_result` to the calling object. This
 immediately exists the handler and no further instructions are
 executed. This can be used to return early from a handler.
 
+## Objects
+
+### From inside the VM
+
+Objects respond to at least one message: `respondsTo`. They should
+respond with a boolean indicating whether they are able to respond to
+that message.
+
+Every object has an attached handler that is a list of bytecode
+instructions. This handler is called for every message sent to the
+object. The handler can access the object's private variables as well as
+a temporary context available until the handler finishes executing. In
+this context there are four special variables available:
+
+* Kame__self
+* Kame__message
+* Kame__arguments
+* Kame__modules
+
+`Kame__self` points to the receiving object so the handler can send a
+message to itself or send its own reference to another
+object. `Kame__message` contains a string with the name of the message
+that was sent. `Kame__arguments` contains a list of the arguments
+sent. `Kame__modules` provides an interface to modules that are part of
+the VM's core. The interface for `Kame__modules` is described later.
+
+If the handler runs to the end without returning a value then `null`
+will be returned automatically.
+
 ## Overview of Types
 
 The VM uses a few data types to manage its state and the code running
 inside the VM.
 
 ### Object
-
-An object is a live agent in the system. It can send and receive
-messages from/to other objects. There is a single block of code which
-handles all messages sent to the object. The arguments are available in
-the context as an array in `Kame__arguments`. A special variable
-`Kame__self` points to the receiving object so it can message itself.
-`Kame__message` contains the message selector.
-
-There is another special variable `Kame__modules` which provides an
-interface to modules that are guaranteed to be safe (relative to the VM)
-as they run entirely inside the VM or are part of the VM's core. The
-interface is described later.
-
-Objects are created using the `makeobject` bytecode instruction. This
-instruction takes a dictionary of private variables as well as a code
-block for the handler.
 
 #### Implementation details
 
