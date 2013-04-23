@@ -1,5 +1,4 @@
-Kame VM
-====
+# Kame VM
 
 Kame is a virtual machine implemented initially in JavaScript. It can
 securely execute arbitrary code without using over-complicated
@@ -64,8 +63,7 @@ crash:
 @
 ```
 
-Overview of Types
-----
+## Overview of Types
 
 The VM uses a few data types to manage its state and the code running
 inside the VM.
@@ -312,8 +310,7 @@ var array = (function () {
 ```
 <!-- }}} -->
 
-Bytecode Instructions
-----
+## Bytecode Instructions
 
 ```
 constant <var_name> <json_value>
@@ -352,8 +349,7 @@ create with the JSON constant `null`.
 
 ### return
 
-Modules
-----
+## Modules
 
 ### Base types
 
@@ -651,18 +647,15 @@ a reference to the other. Before to send the message to the trusted
 object if one of them is trusted. If both objects are untrusted then you
 are in a tough spot.
 
-VM Interface
-----
+## VM Interface
 
 ### Inside
 
 ### Outside
 
-Conventions
-----
+## Conventions
 
-Running the Bytecode
-----
+## Running the Bytecode
 
 Callback as first arg.
 
@@ -846,8 +839,7 @@ continueAt(0);
 ```
 <!-- }}} -->
 
-Putting it All Together
-----
+## Putting it All Together
 
 ```js
 <<*>>=
@@ -900,8 +892,7 @@ implementation.
 
 TODO go into detail about the concurrency issues that can appear.
 
-Examples
-----
+## Examples
 
 ### Purses
 
