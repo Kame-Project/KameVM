@@ -1090,5 +1090,9 @@ factory.Kame__send('makePurse', arr);
 ```
 
 <!--
+Local Variables:
+mode: markdown
+End:
+
 vim: fdm=marker
 -->
