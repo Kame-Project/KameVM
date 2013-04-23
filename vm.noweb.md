@@ -1,5 +1,7 @@
 # Kame VM
 
+## Introduction
+
 Kame is a virtual machine implemented initially in JavaScript. It can
 securely execute arbitrary code without using over-complicated
 sandboxing solutions. We simply enforce three security aspects of
