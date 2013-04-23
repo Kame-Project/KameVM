@@ -100,6 +100,8 @@ method and a VM object holds a reference to it then it can be accessed
 from inside the VM. However the reference will be opaque and cannot be
 persistent across restarts.
 
+`null` responds with an error to every message.
+
 <!-- {{{ -->
 ```js
 <<VM Types: Object>>=
