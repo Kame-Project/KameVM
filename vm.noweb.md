@@ -212,51 +212,10 @@ persistent across restarts.
 
 `null` responds with an error to every message.
 
-<!-- {{{ -->
-```js
-<<VM Types: Object>>=
-var object = (function () {
-    var exports = {};
 
-    function run(codeblock, self, message, arguments) {
-        <<VM Runner: top-level run>>
-    }
 
-    function Knew(variables, codeblock) {
-        var newObject = {};
 
-        if (!variables.keys) {
-            throw new Error("variables should be a safe dictionary");
-        }
-        if (!codeblock.length) {
-            throw new Error("codeblock should be an array");
-        }
 
-        function getPrivate(key) {
-            return variables.get(key);
-        }
-        newObject.getPrivate = getPrivate;
-
-        function setPrivate(key, value) {
-            variables.set(key, value);
-        }
-        newObject.setPrivate = setPrivate;
-
-        function send(strMessage, arguments) {
-            var message = string.from(strMessage);
-            return run(codeblock, newObject, message, arguments);
-        }
-        newObject.Kame__send = send;
-
-        return newObject;
-    }
-    exports.Knew = Knew;
-
-    return exports;
-})();
-@
-```
-<!-- }}} -->
 
 ### Dictionary
 
@@ -264,99 +223,6 @@ To prevent unintended security leaks we do not use the built-in `Object`
 from JavaScript as a dictionary. Instead we implement a new type that
 prefixes all keys so access from inside the VM is namespaced.
 
-<!-- {{{ -->
-```js
-<<VM Types: Dictionary>>=
-var dictionary = (function () {
-    var exports = {};
-
-    function keysOf(dict) {
-        var keys = [];
-        for (var key in dict) {
-            if (dict.hasOwnProperty(key)) {
-                keys.push(key);
-            }
-        }
-        return keys;
-    }
-
-    var safePrefix = 'Kame__dictionary:';
-
-    function safeKey(key) {
-        return safePrefix + key;
-    }
-
-    function Knew() {
-        var dict = {};
-        var insideDict = {};
-
-        function get(key) {
-            return insideDict[safeKey(key)];
-        }
-        dict.get = get;
-
-        function set(key, value) {
-            insideDict[safeKey(key)] = value;
-        }
-        dict.set = set;
-
-        function keys() {
-            var allKeys = keysOf(insideDict);
-            var safeKeys = [];
-            var prefixLen = safePrefix.length;
-            for (var i = 0, l = allKeys.length; i < l; i++) {
-                var key = allKeys[i];
-                if (key.indexOf(safePrefix) === 0) {
-                    var originalKey = key.slice(prefixLen);
-                    safeKeys.push(originalKey);
-                }
-            }
-            return safeKeys;
-        }
-        dict.keys = keys;
-
-        function send(message, arguments) {
-            var callback = arguments.get(0);
-            var key = arguments.get(1);
-            var strKey = key.Kame__toString();
-            if (message === 'get') {
-                var value = get(strKey);
-                callback(value);
-            }
-            if (message === 'set') {
-                var value = arguments.get(2);
-                set(strKey, value);
-                callback();
-            }
-        }
-        dict.Kame__send = send;
-
-        return dict;
-    }
-    exports.Knew = Knew;
-
-    function from(otherDict) {
-        var newDict = Knew();
-
-        var otherKeys = keysOf(otherDict);
-        for (var i = 0, l = otherKeys.length; i < l; i++) {
-            var key = otherKeys[i];
-            if (key.indexOf(safePrefix) === 0) {
-                throw new Error("Please do not pass in safeDicts");
-            }
-            var value = otherDict[key];
-            newDict.set(key, value);
-        }
-
-        return newDict;
-    }
-    exports.from = from;
-
-    return exports;
-})();
-@
-```
-<!-- }}} -->
 
 ### Array
 
@@ -364,63 +230,6 @@ In a similar fashion to the `Dictionary` we implement our own safe
 `Array` type. This array makes sure that only numerical indexes are
 accessible.
 
-<!-- {{{ -->
-```js
-<<VM Types: Array>>=
-var array = (function () {
-    var exports = {};
-
-    function Knew() {
-        var array = {};
-        var innerArray = [];
-
-        function get(index) {
-            var nIndex = parseInt(index);
-            return innerArray[nIndex];
-        }
-        array.get = get;
-
-        function set(index, value) {
-            var nIndex = parseInt(index);
-            innerArray[nIndex] = value;
-        }
-        array.set = set;
-
-        function push(value) {
-            innerArray.push(value);
-        }
-        array.push = push;
-
-        function length() {
-            return innerArray.length;
-        }
-        array.length = length;
-
-        function send(message, arguments) {
-            var callback = arguments.get(0);
-            var key = arguments.get(1);
-            nKey = key.Kame__toNumber();
-            if (message === 'get') {
-                var value = get(nKey);
-                callback(value);
-            }
-            if (message === 'set') {
-                var value = arguments.get(2);
-                set(nKey, value);
-                callback();
-            }
-        }
-        array.Kame__send = send;
-
-        return array;
-    }
-    exports.Knew = Knew;
-
-    return exports;
-})();
-@
-```
-<!-- }}} -->
 
 ## Modules
 
