@@ -68,7 +68,7 @@ crash:
 ## Bytecode Instructions
 
 ```
-constant <var_name> <json_value>
+string <var_name> <string_value>
 load <var_name> <private_name>
 store <var_name> <private_name>
 send <var_result> <var_object> <var_message> <var_arg1>...<var_argN>
@@ -81,18 +81,9 @@ return <var_result>
 
 ### constant
 
-The `json_value` is a raw value embedded in the bytecode. Any item in
-the JSON spec's `value` type is allowed:
+The `string_value` is a raw string embedded in the bytecode.
 
-* string
-* number
-* object
-* array
-* true
-* false
-* null
-
-This item is translated to a VM object and stored under the identifer
+This value is translated to a VM object and stored under the identifer
 given by `var_name`.
 
 ### load
