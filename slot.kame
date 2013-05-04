@@ -1,0 +1,28 @@
+[
+    ["cons", "c_message", "Kame__message", "null"],
+    ["cons", "c_null", "null", "null"],
+    ["string", "s_respondsTo", "respondsTo"],
+    ["string", "s_equals", "equals"],
+    ["string", "s_get", "get"],
+    ["string", "s_put", "put"],
+    ["string", "s_car", "car"],
+    ["string", "s_setCar", "setCar"],
+
+
+    ["send", "b_get", "s_get", "s_equals", "c_message"],
+    ["if", "b_get", "send", "val", "Kame__privateCons", "s_car", "c_null"],
+    ["if", "b_get", "return", "val"],
+
+
+    ["send", "b_put", "s_put", "s_equals", "c_message"],
+    ["if", "b_put", "send", "val", "Kame__arguments", "s_car", "c_null"],
+    ["if", "b_put", "cons", "c_val", "val", "null"],
+    ["if", "b_put", "send", "_", "Kame__privateCons", "s_setCar", "c_val"],
+
+
+    ["send", "b_rTo", "s_respondsTo", "s_equals", "c_message"],
+    ["if", "b_rTo", "send", "val", "s_get", "s_equals", "Kame__arguments"],
+    ["if", "b_rTo", "if", "val", "return", "val"],
+    ["if", "b_rTo", "send", "val", "s_put", "s_equals", "Kame__arguments"],
+    ["if", "b_rTo", "return", "val"]
+]
