@@ -444,7 +444,7 @@
         if (!cb) { cb = function () {}; }
         var block = KcodeToBlock(code);
         var obj = Kobject(block);
-        obj.send("foo", args, cb);
+        obj.send("run", args, cb);
     };
     exports.Krun = Krun;
 
