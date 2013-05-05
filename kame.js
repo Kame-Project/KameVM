@@ -56,7 +56,7 @@
                     return;
                 }
                 if (message === "setCdr") {
-                    Ksend(args, "cdr", Kcons(), function (val) {
+                    Ksend(args, "car", Kcons(), function (val) {
                         obj.setCdr(val);
                         cb();
                     });
