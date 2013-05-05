@@ -32,6 +32,19 @@
         obj.send(message, args, cbOnce);
     };
 
+    var KrespondsTo = function (args, cb, messages) {
+        Ksend(args, "car", Kcons(), function (val) {
+            if (!val.nativeString) { cb(Kfalse); return; }
+            var message = val.nativeString();
+            for (var i = 0, l = messages.length; i < l; i++) {
+                if (messages[i] === message) {
+                    cb(Ktrue); return;
+                }
+            }
+            cb(Kfalse); return;
+        });
+    };
+
     var Kcons = function (theCar, theCdr) {
         var car = theCar, cdr = theCdr;
         var obj = {
@@ -60,6 +73,12 @@
                         obj.setCdr(val);
                         cb();
                     });
+                    return;
+                }
+                if (message === "respondsTo") {
+                    KrespondsTo(args, cb, [
+                        "car", "cdr", "setCar", "setCdr", "respondsTo"
+                    ]);
                     return;
                 }
                 cb();
@@ -117,6 +136,12 @@
                     cb(obj.length());
                     return;
                 }
+                if (message === "respondsTo") {
+                    KrespondsTo(args, cb, [
+                        "respondsTo", "equals", "append", "substring", "length"
+                    ]);
+                    return;
+                }
                 cb();
                 return;
             },
@@ -139,6 +164,12 @@
                         return;
                     });
                 }
+                if (message === "respondsTo") {
+                    KrespondsTo(args, cb, [
+                        "respondsTo", "equals"
+                    ]);
+                    return;
+                }
                 cb();
                 return;
             },
@@ -151,6 +182,12 @@
     var Ktrue = {
         send: function (message, args, cb) {
             if (message === "not") { cb(Kfalse); return; }
+            if (message === "respondsTo") {
+                KrespondsTo(args, cb, [
+                    "respondsTo", "not"
+                ]);
+                return;
+            }
             cb(); return;
         }
     };
@@ -159,6 +196,12 @@
     var Kfalse = {
         send: function (message, args, cb) {
             if (message === "not") { cb(Ktrue); return; }
+            if (message === "respondsTo") {
+                KrespondsTo(args, cb, [
+                    "respondsTo", "not"
+                ]);
+                return;
+            }
             cb(); return;
         }
     };
@@ -431,6 +474,20 @@
                 var log = theConsole.log || function () {};
                 log(KtoNative(args, Kid));
                 cb();
+                return;
+            }
+            if (message === "respondsTo") {
+                KrespondsTo(args, cb, [
+                    "respondsTo",
+                    "parseInt",
+                    "true",
+                    "false",
+                    "loop",
+                    "async",
+                    "nth",
+                    "object",
+                    "log"
+                ]);
                 return;
             }
             cb();
