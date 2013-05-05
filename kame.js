@@ -20,6 +20,7 @@
 
     var Ksend = function (obj, message, args, cb) {
         // console.log(KtoNative(KlistToCons([obj, message, args, cb], Kid)));
+        if (KisNull(obj)) { cb(); return; }
         var done = false;
         var cbOnce = function (val) {
             if (!done) {
