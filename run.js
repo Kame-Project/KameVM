@@ -2,7 +2,7 @@ var fs = require("fs");
 var kame = require("./kame");
 
 var reachedFilenames = false;
-var globalCons = kame.Kcons();
+var globalCons = kame.Kcons(kame.KutilProxy, null);
 process.argv.forEach(function (arg) {
     if (reachedFilenames) {
         var filename = arg;

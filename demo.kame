@@ -5,6 +5,19 @@
     ["string", "sBar", "bar"],
     ["string", "sSelf", "self"],
     ["string", "sLog", "log"],
+
+
+    ["string", "sCar", "car"],
+    ["cons", "cNull", "null", "null"],
+    ["send", "globalCons", "Kame__arguments", "sCar", "cNull"],
+    ["send", "utilProxy", "globalCons", "sCar", "cNull"],
+    ["cons", "cProxy", "utilProxy", "null"],
+    ["send", "_", "Kame__util", "sLog", "cProxy"],
+    ["string", "sSet", "set"],
+    ["cons", "cSelf", "Kame__self", "null"],
+    ["send", "_", "utilProxy__", "sSet", "cSelf"],
+
+
     ["send", "mRun", "sRun", "sEquals", "cMessage"],
     ["if", "mRun", "send", "x", "Kame__self", "sBar", "cMessage"],
     ["if", "mRun", "cons", "cX", "x", "null"],

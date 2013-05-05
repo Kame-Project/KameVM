@@ -401,7 +401,7 @@
     };
     exports.KcodeToBlock = KcodeToBlock;
 
-    var Kutil = {
+    var KutilImplementation = {
         send: function (message, args, cb) {
             if (message === "parseInt") {
                 Ksend(args, "car", Kcons(), function (val) {
@@ -495,6 +495,52 @@
             return;
         }
     };
+
+    var Kproxy = function (theObj) {
+        var innerObj = theObj;
+        var obj = {
+            set: function (theObj) { innerObj = theObj; },
+            get: function () { return innerObj; },
+            proxy: function () {
+                return {
+                    send: function (message, args, cb) {
+                        Ksend(innerObj, message, args, cb);
+                    }
+                };
+            },
+            send: function (message, args, cb) {
+                if (message === "set") {
+                    Ksend(args, "car", Kcons(), function (val) {
+                        obj.set(val);
+                        cb();
+                    });
+                    return;
+                }
+                if (message === "get") {
+                    cb(obj.get());
+                    return;
+                }
+                if (message === "proxy") {
+                    cb(obj.proxy());
+                    return;
+                }
+                if (message === "respondsTo") {
+                    KrespondsTo(args, cb, [
+                        "respondsTo", "set", "get", "proxy"
+                    ]);
+                    return;
+                }
+                cb();
+                return;
+            }
+        };
+        return obj;
+    };
+    exports.Kproxy = Kproxy;
+
+    var KutilProxy = Kproxy(KutilImplementation);
+    exports.KutilProxy = KutilProxy;
+    var Kutil = KutilProxy.proxy();
     exports.Kutil = Kutil;
 
     var Krun = function (code, args, cb) {
