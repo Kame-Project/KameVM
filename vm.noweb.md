@@ -1,5 +1,9 @@
 # Kame VM
 
+## NOTICE
+
+This documentation isn't up-to-date with `kame.js`.
+
 ## Introduction
 
 Kame is a virtual machine implemented initially in JavaScript. It can
